@@ -10,8 +10,6 @@ app.use(cors());
 const port = 5000;
 
 mongoose.connect('mongodb+srv://ttarpey58:zzZIrHBkKRcLtmTw@dataone0.rfg3qm8.mongodb.net/?retryWrites=true&w=majority&appName=dataone0', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 
 const UserSchema = new mongoose.Schema({
@@ -52,6 +50,7 @@ const verifyToken = (req, res, next) => {
       return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     }
 
+    console.log(decoded.id);
     req.userId = decoded.id;
     next();
   });
@@ -347,6 +346,21 @@ app.get('/social_media_accounts', verifyToken, async (req, res) => {
     } catch (error) {
       console.error(error);
       res.status(500).send('Error deleting social media account.');
+    }
+  });
+
+  // Dashboard endpoint
+app.get('/user/dashboard', verifyToken, async (req, res) => {
+    console.log(req.userId);
+    try {
+      const user = await UserModel.findById(req.userId);
+      if (!user) {
+        return res.status(404).send('User not found.');
+      }
+      res.json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error fetching user data.');
     }
   });
   
