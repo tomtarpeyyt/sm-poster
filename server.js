@@ -2,11 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
+app.use(express.json());
+app.use(cors());
+const port = 5000;
 
-mongoose.connect('mongodb://localhost:27017/your_database_name', {
+mongoose.connect('mongodb+srv://ttarpey58:zzZIrHBkKRcLtmTw@dataone0.rfg3qm8.mongodb.net/?retryWrites=true&w=majority&appName=dataone0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -57,6 +60,7 @@ const verifyToken = (req, res, next) => {
 // Signup endpoint
 app.post('/signup', async (req, res) => {
   try {
+
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     
