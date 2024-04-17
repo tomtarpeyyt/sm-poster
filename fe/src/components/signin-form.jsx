@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function SigninForm() {
@@ -6,6 +7,8 @@ export default function SigninForm() {
     email: '',
     password: ''
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,9 +18,11 @@ export default function SigninForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/signin', formData);
+      const response = await axios.post('http://localhost:5000/signin', formData);
       console.log(response.data);
       // Handle success - redirect user, show success message, etc.
+      localStorage.setItem("token", response.data.token);
+      navigate('/dashboard');
     } catch (error) {
       console.error(error.response.data);
       // Handle error - display error message to user

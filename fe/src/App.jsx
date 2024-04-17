@@ -3,6 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import SigninForm from './components/signin-form'
 import SignupForm from './components/signup-form'
 import UserDashboard from './components/dashboard';
+import HomePage from './components/home';
 
 export default function App() {
 
@@ -12,7 +13,7 @@ export default function App() {
         Hello world!
       </h1>
       <Routes>
-      <Route path='/' element={<SignupForm />} />
+      <Route path='/' element={<HomePage />} />
       <Route path='/sign-in' element={<SigninForm />} />
       <Route path='/sign-up' element={<SignupForm />} />
       <Route path='/dashboard' element={<UserDashboard />} />

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const UserDashboard = () => {
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -16,6 +18,7 @@ const UserDashboard = () => {
       } catch (error) {
         console.error(error);
         // Handle error - redirect to sign-in page or display error message
+        navigate('/sign-in');
       }
     };
 
@@ -25,6 +28,7 @@ const UserDashboard = () => {
   const handleSignOut = () => {
     // Clear user data and token from localStorage
     localStorage.removeItem('token');
+    navigate('/sign-in');
     // Redirect user to sign-in page or homepage
     // Example: window.location.href = '/signin';
   };
